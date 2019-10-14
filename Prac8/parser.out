@@ -1,0 +1,147 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> S
+Rule 1     S -> a E
+Rule 2     E -> A
+Rule 3     E -> B
+Rule 4     A -> a A
+Rule 5     A -> B
+Rule 6     B -> b B
+Rule 7     B -> b empty
+Rule 8     empty -> <empty>
+
+Terminals, with rules where they appear
+
+a                    : 1 4
+b                    : 6 7
+error                : 
+
+Nonterminals, with rules where they appear
+
+A                    : 2 4
+B                    : 3 5 6
+E                    : 1
+S                    : 0
+empty                : 7
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . S
+    (1) S -> . a E
+
+    a               shift and go to state 1
+
+    S                              shift and go to state 2
+
+state 1
+
+    (1) S -> a . E
+    (2) E -> . A
+    (3) E -> . B
+    (4) A -> . a A
+    (5) A -> . B
+    (6) B -> . b B
+    (7) B -> . b empty
+
+    a               shift and go to state 3
+    b               shift and go to state 5
+
+    A                              shift and go to state 4
+    B                              shift and go to state 7
+    E                              shift and go to state 6
+
+state 2
+
+    (0) S' -> S .
+
+
+
+state 3
+
+    (4) A -> a . A
+    (4) A -> . a A
+    (5) A -> . B
+    (6) B -> . b B
+    (7) B -> . b empty
+
+    a               shift and go to state 3
+    b               shift and go to state 5
+
+    A                              shift and go to state 8
+    B                              shift and go to state 9
+
+state 4
+
+    (2) E -> A .
+
+    $end            reduce using rule 2 (E -> A .)
+
+
+state 5
+
+    (6) B -> b . B
+    (7) B -> b . empty
+    (6) B -> . b B
+    (7) B -> . b empty
+    (8) empty -> .
+
+    b               shift and go to state 5
+    $end            reduce using rule 8 (empty -> .)
+
+    B                              shift and go to state 10
+    empty                          shift and go to state 11
+
+state 6
+
+    (1) S -> a E .
+
+    $end            reduce using rule 1 (S -> a E .)
+
+
+state 7
+
+    (3) E -> B .
+    (5) A -> B .
+
+  ! reduce/reduce conflict for $end resolved using rule 3 (E -> B .)
+    $end            reduce using rule 3 (E -> B .)
+
+  ! $end            [ reduce using rule 5 (A -> B .) ]
+
+
+state 8
+
+    (4) A -> a A .
+
+    $end            reduce using rule 4 (A -> a A .)
+
+
+state 9
+
+    (5) A -> B .
+
+    $end            reduce using rule 5 (A -> B .)
+
+
+state 10
+
+    (6) B -> b B .
+
+    $end            reduce using rule 6 (B -> b B .)
+
+
+state 11
+
+    (7) B -> b empty .
+
+    $end            reduce using rule 7 (B -> b empty .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: reduce/reduce conflict in state 7 resolved using rule (E -> B)
+WARNING: rejected rule (A -> B) in state 7
